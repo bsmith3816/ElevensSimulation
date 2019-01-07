@@ -53,6 +53,13 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
+        List<Integer> test
+        if(selectedCards.contains())
+        for(int i = 0; i < selectedCards.size(); i++){
+            for(int j = i; j < selectedCards.size(); j++){
+
+            }
+        }
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     }
 
