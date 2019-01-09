@@ -54,16 +54,16 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        if (var1.size() < 2) {
+        if (selectedCards.size() < 2) {
             return false;
-        } else if (var1.size() > 3) {
+        } else if (selectedCards.size() > 3) {
             return false;
-        } else if (var1.size() == 2) {
-            int var2 = (Integer)var1.get(0);
-            int var3 = (Integer)var1.get(1);
+        } else if (selectedCards.size() == 2) {
+            int var2 = selectedCards.get(0);
+            int var3 = selectedCards.get(1);
             return this.cardAt(var2).pointValue() + this.cardAt(var3).pointValue() == 11;
         } else {
-            return this.containsJQK(var1);
+            return this.containsJQK(selectedCards);
         }
 
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
@@ -106,7 +106,7 @@ public class ElevensBoard extends Board {
         boolean var2 = false;
         boolean var3 = false;
         boolean var4 = false;
-        Iterator var5 = var1.iterator();
+        Iterator var5 = selectedCards.iterator();
 
         while(var5.hasNext()) {
             Integer var6 = (Integer)var5.next();
