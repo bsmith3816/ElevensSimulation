@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,13 +54,18 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        List<Integer> test
-        if(selectedCards.contains())
-        for(int i = 0; i < selectedCards.size(); i++){
-            for(int j = i; j < selectedCards.size(); j++){
-
-            }
+        if (var1.size() < 2) {
+            return false;
+        } else if (var1.size() > 3) {
+            return false;
+        } else if (var1.size() == 2) {
+            int var2 = (Integer)var1.get(0);
+            int var3 = (Integer)var1.get(1);
+            return this.cardAt(var2).pointValue() + this.cardAt(var3).pointValue() == 11;
+        } else {
+            return this.containsJQK(var1);
         }
+
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     }
 
@@ -97,6 +103,24 @@ public class ElevensBoard extends Board {
      *              include a jack, a queen, and a king; false otherwise.
      */
     private boolean containsJQK(List<Integer> selectedCards) {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        boolean var2 = false;
+        boolean var3 = false;
+        boolean var4 = false;
+        Iterator var5 = var1.iterator();
+
+        while(var5.hasNext()) {
+            Integer var6 = (Integer)var5.next();
+            int var7 = var6;
+            if (this.cardAt(var7).rank().equals("jack")) {
+                var2 = true;
+            } else if (this.cardAt(var7).rank().equals("queen")) {
+                var3 = true;
+            } else if (this.cardAt(var7).rank().equals("king")) {
+                var4 = true;
+            }
+        }
+
+        return var2 && var3 && var4;
+
     }
 }
