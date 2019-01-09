@@ -80,6 +80,14 @@ public class ElevensBoard extends Board {
     @Override
     public boolean anotherPlayIsPossible() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        if(isEmpty()){
+            return false;
+        }
+        for(int i = 0; i < BOARD_SIZE; i++){
+            for(int j = i; j < BOARD_SIZE; j++){
+                if(cards)
+            }
+        }
     }
 
     /**
