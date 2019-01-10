@@ -111,7 +111,7 @@ public class ElevensBoard extends Board {
     private boolean containsPairSum11(List<Integer> selectedCards) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
 
-        
+
     }
 
     /**
