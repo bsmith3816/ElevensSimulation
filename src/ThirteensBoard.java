@@ -87,6 +87,13 @@ public class ThirteensBoard extends Board {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = i; j < BOARD_SIZE; j++) {
                 temp.add(i);
+                if(containsK(temp))
+                {
+                    return true;
+                }
+                temp.clear();
+
+                temp.add(i);
                 temp.add(j);
                 if (containsK(temp) || containsPairSum13(temp)) {
                     return true;
