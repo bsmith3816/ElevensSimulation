@@ -1,4 +1,4 @@
-import java.util.Iterator;
+
 import java.util.List;
 import java.util.ArrayList;
 
@@ -53,21 +53,23 @@ public class ThirteensBoard extends Board {
      * @return true if the selected cards form a valid group for removal;
      * false otherwise.
      */
+    /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        if (selectedCards.size() < 2) {
+        if (selectedCards.size() < 1 || selectedCards.size() > 2) {
             return false;
-        } else if (selectedCards.size() > 3) {
-            return false;
-        } else if (selectedCards.size() == 2) {
-            int a = selectedCards.get(0);
-            int b = selectedCards.get(1);
-            return this.cardAt(a).pointValue() + this.cardAt(b).pointValue() == 11;
         } else {
-            return this.containsK(selectedCards);
+            if (selectedCards.size() == 1) {
+                return containsK(selectedCards);
+            } else {
+                int a = selectedCards.get(0);
+                int b = selectedCards.get(1);
+                if (this.cardAt(a).pointValue() + this.cardAt(b).pointValue() == 13) {
+                    return true;
+                }
+            }
         }
-
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
+        return false;
     }
 
     /**
@@ -126,7 +128,7 @@ public class ThirteensBoard extends Board {
      */
     private boolean containsK(List<Integer> selectedCards) {
         for (int i = 0; i < selectedCards.size(); i++) {
-            if (this.cardAt(i).rank().equals("king")) {
+            if (this.cardAt(i).rank().toLowerCase().equals("king")) {
                 return true;
             }
         }
