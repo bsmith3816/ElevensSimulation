@@ -86,14 +86,18 @@ public class ElevensBoard extends Board {
     @Override
     public boolean anotherPlayIsPossible() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        if(isEmpty()){
-            return false;
-        }
+        List<Integer> temp = new ArrayList<Integer>();
         for(int i = 0; i < BOARD_SIZE; i++){
             for(int j = i; j < BOARD_SIZE; j++){
-                if(cards)
+                temp.add(i);
+                temp.add(j);
+                if(containsJQK(temp) || containsPairSum11(temp)){
+                    return true;
+                }
+                temp.clear();
             }
         }
+        return false;
     }
 
     /**
