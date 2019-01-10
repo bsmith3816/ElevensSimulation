@@ -85,17 +85,15 @@ public class ThirteensBoard extends Board {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
         List<Integer> temp = new ArrayList<Integer>();
         for (int i = 0; i < BOARD_SIZE; i++) {
+            temp.add(i);
+            if(containsK(temp)){
+                return true;
+            }
+            temp.clear();
             for (int j = i; j < BOARD_SIZE; j++) {
                 temp.add(i);
-                if(containsK(temp))
-                {
-                    return true;
-                }
-                temp.clear();
-
-                temp.add(i);
                 temp.add(j);
-                if (containsK(temp) || containsPairSum13(temp)) {
+                if (containsPairSum13(temp)) {
                     return true;
                 }
                 temp.clear();
@@ -135,7 +133,7 @@ public class ThirteensBoard extends Board {
      */
     private boolean containsK(List<Integer> selectedCards) {
         for (int i = 0; i < selectedCards.size(); i++) {
-            if (this.cardAt(i).rank().toLowerCase().equals("king")) {
+            if (this.cardAt(i).rank().equalsIgnoreCase("king")) {
                 return true;
             }
         }
