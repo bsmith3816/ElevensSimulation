@@ -54,15 +54,21 @@ public class ElevensBoard extends Board {
      */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        if (selectedCards.size() < 2) {
+        if (selectedCards.size() < 2)
+        {
             return false;
-        } else if (selectedCards.size() > 3) {
+        }
+        else if (selectedCards.size() > 3)
+        { 
             return false;
-        } else if (selectedCards.size() == 2) {
-            int var2 = selectedCards.get(0);
-            int var3 = selectedCards.get(1);
-            return this.cardAt(var2).pointValue() + this.cardAt(var3).pointValue() == 11;
-        } else {
+        }
+        else if (selectedCards.size() == 2)
+        {
+            int a = selectedCards.get(0);
+            int b = selectedCards.get(1);
+            return this.cardAt(a).pointValue() + this.cardAt(b).pointValue() == 11;
+        }
+        else {
             return this.containsJQK(selectedCards);
         }
 
