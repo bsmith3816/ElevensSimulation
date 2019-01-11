@@ -48,13 +48,12 @@ public class ElevensBoard extends Board {
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
         /* *** TO BE MODIFIED IN ACTIVITY 11 *** */
-        if (selectedCards.size() == 2) {
-            return containsPairSum11(selectedCards);
-        } else if (selectedCards.size() == 3) {
-            return containsJQK(selectedCards);
-        } else {
-            return false;
+        if (selectedCards.size() == 2 && findPairSum11(selectedCards).size() > 0) {
+            return true;
+        } else if (selectedCards.size() == 3 && findJQK(selectedCards).size() > 0) {
+            return true;
         }
+        return false;
     }
 
     /**
@@ -69,7 +68,7 @@ public class ElevensBoard extends Board {
     public boolean anotherPlayIsPossible() {
         /* *** TO BE MODIFIED IN ACTIVITY 11 *** */
         List<Integer> cIndexes = cardIndexes();
-        return containsPairSum11(cIndexes) || containsJQK(cIndexes);
+        return findPairSum11(cIndexes).size() > 0 || findJQK(cIndexes).size() > 0;
     }
 
     /**
@@ -80,18 +79,20 @@ public class ElevensBoard extends Board {
      * @return a list of the indexes of an 11-pair, if an 11-pair was found;
      *         an empty list, if an 11-pair was not found.
      */
-    private boolean containsPairSum11(List<Integer> selectedCards) {
+    private List<Integer> findPairSum11(List<Integer> selectedCards) {
         /* *** TO BE CHANGED INTO findPairSum11 IN ACTIVITY 11 *** */
+        List<Integer> ans = new ArrayList<Integer>();
         for (int sk1 = 0; sk1 < selectedCards.size(); sk1++) {
             int k1 = selectedCards.get(sk1).intValue();
             for (int sk2 = sk1 + 1; sk2 < selectedCards.size(); sk2++) {
                 int k2 = selectedCards.get(sk2).intValue();
                 if (cardAt(k1).pointValue() + cardAt(k2).pointValue() == 11) {
-                    return true;
+                    ans.add(k1);
+                    ans.add(k2);
                 }
             }
         }
-        return false;
+        return ans;
     }
 
     /**
@@ -102,22 +103,33 @@ public class ElevensBoard extends Board {
      * @return a list of the indexes of a JQK, if a JQK was found;
      *         an empty list, if a JQK was not found.
      */
-    private boolean containsJQK(List<Integer> selectedCards) {
+    private List<Integer> findJQK(List<Integer> selectedCards) {
         /* *** TO BE CHANGED INTO findJQK IN ACTIVITY 11 *** */
+        List<Integer> ans = new ArrayList<Integer>();
         boolean foundJack = false;
         boolean foundQueen = false;
         boolean foundKing = false;
+        int posJ = 0;
+        int posQ = 0;
+        int posK = 0;
         for (Integer kObj : selectedCards) {
             int k = kObj.intValue();
             if (cardAt(k).rank().equals("jack")) {
                 foundJack = true;
+                posJ = k;
             } else if (cardAt(k).rank().equals("queen")) {
                 foundQueen = true;
+                posQ = k;
             } else if (cardAt(k).rank().equals("king")) {
                 foundKing = true;
+                posK = k;
             }
+        } if(foundJack && foundQueen && foundKing) {
+            ans.add(posJ);
+            ans.add(posQ);
+            ans.add(posK);
         }
-        return foundJack && foundQueen && foundKing;
+        return ans;
     }
 
     /**
