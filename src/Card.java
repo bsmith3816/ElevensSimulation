@@ -1,5 +1,10 @@
-public class Card
-{
+/**
+ * Card.java
+ *
+ * <code>Card</code> represents a playing card.
+ */
+public class Card {
+
     /**
      * String value that holds the suit of the card
      */

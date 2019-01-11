@@ -1,9 +1,8 @@
-
 import java.util.List;
 import java.util.ArrayList;
 
 /**
- * The ElevensBoard class represents the board in a game of Elevens.
+ * The ThirteensBoard class represents the board in a game of Thirteens.
  */
 public class ThirteensBoard extends Board {
 
@@ -31,13 +30,7 @@ public class ThirteensBoard extends Board {
             {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 0};
 
     /**
-     * Flag used to control debugging print statements.
-     */
-    private static final boolean I_AM_DEBUGGING = false;
-
-
-    /**
-     * Creates a new <code>ElevensBoard</code> instance.
+     * Creates a new <code>ThirteensBoard</code> instance.
      */
     public ThirteensBoard() {
         super(BOARD_SIZE, RANKS, SUITS, POINT_VALUES);
@@ -45,79 +38,107 @@ public class ThirteensBoard extends Board {
 
     /**
      * Determines if the selected cards form a valid group for removal.
-     * In Elevens, the legal groups are (1) a pair of non-face cards
+     * In Thirteens, the legal groups are (1) a pair of non-face cards
      * whose values add to 13, and (2) a king.
-     *
      * @param selectedCards the list of the indices of the selected cards.
      * @return true if the selected cards form a valid group for removal;
-     * false otherwise.
+     *         false otherwise.
      */
-    /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
     @Override
     public boolean isLegal(List<Integer> selectedCards) {
-        if (selectedCards.size() < 1 || selectedCards.size() > 2) {
+        /* *** TO BE MODIFIED IN ACTIVITY 11 *** */
+        if (selectedCards.size() == 1) {
+            return containsKing(selectedCards);
+        } else if (selectedCards.size() == 2) {
+            return containsPairSum13(selectedCards);
+        } else {
             return false;
         }
-        if (selectedCards.size() == 1) {
-            return containsK(selectedCards);
-        }
-        return containsPairSum13(selectedCards);
-        }
+    }
 
     /**
      * Determine if there are any legal plays left on the board.
-     * In Elevens, there is a legal play if the board contains
-     * (1) a pair of non-face cards whose values add to 13, or (2) a king card.
-     *
+     * In Thirteens, there is a legal play if the board contains
+     * (1) a pair of non-face cards whose values add to 13, or (2) a king.
      * @return true if there is a legal play left on the board;
-     * false otherwise.
+     *         false otherwise.
      */
     @Override
     public boolean anotherPlayIsPossible() {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        List<Integer> temp = new ArrayList<Integer>();
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            temp.add(i);
-            if(containsK(temp)){
-                return true;
-            }
-            temp.clear();
-            for (int j = i; j < BOARD_SIZE; j++) {
-                temp.add(i);
-                temp.add(j);
-                if (containsPairSum13(temp)) {
+        /* *** TO BE MODIFIED IN ACTIVITY 11 *** */
+        List<Integer> cIndexes = cardIndexes();
+        return containsPairSum13(cIndexes) || containsKing(cIndexes);
+    }
+
+    /**
+     * Look for an 13-pair in the selected cards.
+     * @param selectedCards selects a subset of this board.  It is list
+     *                      of indexes into this board that are searched
+     *                      to find an 13-pair.
+     * @return a list of the indexes of an 13-pair, if an 13-pair was found;
+     *         an empty list, if an 13-pair was not found.
+     */
+    private boolean containsPairSum13(List<Integer> selectedCards) {
+        /* *** TO BE CHANGED INTO findPairSum13 IN ACTIVITY 11 *** */
+        for (int sk1 = 0; sk1 < selectedCards.size(); sk1++) {
+            int k1 = selectedCards.get(sk1).intValue();
+            for (int sk2 = sk1 + 1; sk2 < selectedCards.size(); sk2++) {
+                int k2 = selectedCards.get(sk2).intValue();
+                if (cardAt(k1).pointValue() + cardAt(k2).pointValue() == 13) {
                     return true;
                 }
-                temp.clear();
             }
         }
         return false;
     }
 
     /**
-     * Check for an 13-pair in the selected cards.
-     *
+     * Look for a king in the selected cards.
      * @param selectedCards selects a subset of this board.  It is list
      *                      of indexes into this board that are searched
-     *                      to find an 13-pair.
-     * @return true if the board entries in selectedCards
-     * contain an 13-pair; false otherwise.
+     *                      to find a king.
+     * @return a list of the index of a king, if a king was found;
+     *         an empty list, if a king was not found.
      */
-    private boolean containsPairSum13(List<Integer> selectedCards) {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        return this.cardAt(selectedCards.get(0)).pointValue() + this.cardAt(selectedCards.get(1)).pointValue() == 13;
+    private boolean containsKing(List<Integer> selectedCards) {
+        /* *** TO BE CHANGED INTO findKing IN ACTIVITY 11 *** */
+        for (Integer kObj : selectedCards) {
+            int k = kObj.intValue();
+            if (cardAt(k).rank().equals("king")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
-     * Check for a K in the selected cards.
-     *
-     * @param selectedCards selects a subset of this board.  It is list
-     *                      of indexes into this board that are searched
-     *                      to find a K card.
-     * @return true if the board entries in selectedCards
-     * include a king; false otherwise.
+     * Looks for a legal play on the board.  If one is found, it plays it.
+     * @return true if a legal play was found (and made); false othewise.
      */
-    private boolean containsK(List<Integer> selectedCards) {
-        return (this.cardAt(selectedCards.get(0)).pointValue() == 0);
+    public boolean playIfPossible() {
+        /* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+        return false; // REPLACE !
+    }
+
+    /**
+     * Looks for a pair of non-face cards whose values sum to 13.
+     * If found, replace them with the next two cards in the deck.
+     * The simulation of this game uses this method.
+     * @return true if an 13-pair play was found (and made); false othewise.
+     */
+    private boolean playPairSum13IfPossible() {
+        /* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+        return false; // REPLACE !
+    }
+
+    /**
+     * Looks for a King.
+     * If found, replace it with the next card in the deck.
+     * The simulation of this game uses this method.
+     * @return true if a king play was found (and made); false othewise.
+     */
+    private boolean playKingIfPossible() {
+        /* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+        return false; // REPLACE !
     }
 }
