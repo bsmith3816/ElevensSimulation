@@ -138,7 +138,7 @@ public class ElevensBoard extends Board {
      */
     public boolean playIfPossible() {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
-        return false; // REPLACE !
+        return anotherPlayIsPossible(); // REPLACE !
     }
 
     /**
@@ -148,7 +148,18 @@ public class ElevensBoard extends Board {
      * @return true if an 11-pair play was found (and made); false othewise.
      */
     private boolean playPairSum11IfPossible() {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+        List<Integer> temp = new ArrayList<Integer>();
+        for(int i = 0; i < BOARD_SIZE; i++){
+            for(int j = 1; j < BOARD_SIZE; j++){
+                temp.add(i);
+                temp.add(j);
+                if(findPairSum11(temp).size() > 0){
+                    this.replaceSelectedCards(temp);
+                    return true;
+                }
+                temp.clear();
+            }
+        }
         return false; // REPLACE !
     }
 
@@ -159,7 +170,22 @@ public class ElevensBoard extends Board {
      * @return true if a JQK play was found (and made); false othewise.
      */
     private boolean playJQKIfPossible() {
-        /* *** TO BE IMPLEMENTED IN ACTIVITY 11 *** */
+
+        List<Integer> temp = new ArrayList<Integer>();
+        for(int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 1; j < BOARD_SIZE; j++) {
+                for (int k = 2; k < BOARD_SIZE; k++) {
+                    temp.add(i);
+                    temp.add(j);
+                    temp.add(k);
+                    if (findJQK(temp).size() > 0) {
+                        this.replaceSelectedCards(temp);
+                        return true;
+                    }
+                    temp.clear();
+                }
+            }
+        }
         return false; // REPLACE !
     }
 }
