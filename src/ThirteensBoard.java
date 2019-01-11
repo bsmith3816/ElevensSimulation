@@ -46,8 +46,7 @@ public class ThirteensBoard extends Board {
     /**
      * Determines if the selected cards form a valid group for removal.
      * In Elevens, the legal groups are (1) a pair of non-face cards
-     * whose values add to 11, and (2) a group of three cards consisting of
-     * a jack, a queen, and a king in some order.
+     * whose values add to 13, and (2) a king.
      *
      * @param selectedCards the list of the indices of the selected cards.
      * @return true if the selected cards form a valid group for removal;
@@ -58,19 +57,12 @@ public class ThirteensBoard extends Board {
     public boolean isLegal(List<Integer> selectedCards) {
         if (selectedCards.size() < 1 || selectedCards.size() > 2) {
             return false;
-        } else {
-            if (selectedCards.size() == 1) {
-                return containsK(selectedCards);
-            } else {
-                int a = selectedCards.get(0);
-                int b = selectedCards.get(1);
-                if (this.cardAt(a).pointValue() + this.cardAt(b).pointValue() == 13) {
-                    return true;
-                }
-            }
         }
-        return false;
-    }
+        if (selectedCards.size() == 1) {
+            return containsK(selectedCards);
+        }
+        return containsPairSum13(selectedCards);
+        }
 
     /**
      * Determine if there are any legal plays left on the board.
@@ -113,13 +105,7 @@ public class ThirteensBoard extends Board {
      */
     private boolean containsPairSum13(List<Integer> selectedCards) {
         /* *** TO BE IMPLEMENTED IN ACTIVITY 9 *** */
-        if (selectedCards.size() == 2) {
-            if (this.cardAt(selectedCards.get(0)).pointValue() + this.cardAt(selectedCards.get(1)).pointValue() == 13) {
-                return true;
-            }
-        }
-        return false;
-
+        return this.cardAt(selectedCards.get(0)).pointValue() + this.cardAt(selectedCards.get(1)).pointValue() == 13;
     }
 
     /**
@@ -132,12 +118,6 @@ public class ThirteensBoard extends Board {
      * include a king; false otherwise.
      */
     private boolean containsK(List<Integer> selectedCards) {
-        for (int i = 0; i < selectedCards.size(); i++) {
-            if (this.cardAt(i).rank().equalsIgnoreCase("king")) {
-                return true;
-            }
-        }
-        return false;
-
+        return (this.cardAt(selectedCards.get(0)).pointValue() == 0);
     }
 }
